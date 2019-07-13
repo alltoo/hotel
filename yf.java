@@ -13,21 +13,25 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 
 public class yf extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField name;
 	private JTextField number;
-	private JTextField level;
 	private JTextField quantity;
+	private JComboBox cblevel;
 	Hotel s;
-
+	String major;
 	/**
 	 * Launch the application.
 	 */
@@ -47,9 +51,9 @@ public class yf extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public yf() {
+	public yf() throws FileNotFoundException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 740, 341);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -81,11 +85,6 @@ public class yf extends JFrame {
 		contentPane.add(number);
 		number.setColumns(10);
 		
-		level = new JTextField();
-		level.setBounds(285, 185, 129, 23);
-		contentPane.add(level);
-		level.setColumns(10);
-		
 		quantity = new JTextField();
 		quantity.setBounds(285, 253, 129, 23);
 		contentPane.add(quantity);
@@ -94,19 +93,22 @@ public class yf extends JFrame {
 		JButton button = new JButton("\u4FDD\u5B58");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				s=new Hotel(name.getText(),number.getText(),level.getText(),quantity.getText());
-				String path="d:/�Ƶ��ļ�����/hotel.txt";
+				
+				String le= (String) cblevel.getSelectedItem();
+				s=new Hotel(name.getText(),number.getText(),le,quantity.getText());
+				String path="d:/酒店文件储存/hotel.txt";
+				//定义文件的储存路径；
 				File f=new File(path);
 				Writer out =null;
-				
+				//写文件；
 				try {
-					out=new FileWriter(f);
+					out=new FileWriter(f,true);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				try {
-					out.write(s.toString());
+					out.write(s.toSaveString());
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -132,5 +134,48 @@ public class yf extends JFrame {
 		});
 		button_1.setBounds(317, 298, 97, 23);
 		contentPane.add(button_1);
+		
+		 cblevel = new JComboBox();
+		 cblevel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		String path="d:/酒店文件储存/level.txt";
+		//读文件；
+		
+		try {
+			FileReader fr=new FileReader(path);
+			BufferedReader bf=new BufferedReader(fr);
+			
+			
+				while((major=bf.readLine())!=null) {
+					cblevel.addItem(major);
+				}
+				//循环读文件，直到null；
+			bf.close();
+			fr.close();
+			//关闭文件
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();//解决了文件找不到的异常；
+		}
+		
+		/*comboBox.addItem("A");
+		comboBox.addItem("B");
+		comboBox.addItem("C");*/
+		cblevel.setBounds(285, 184, 129, 29);
+		contentPane.add(cblevel);
+		
+		JButton button_2 = new JButton("\u6E05\u7A7A");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				 name.setText("");
+				 number.setText(""); 
+				// level.setText("");
+				 quantity.setText("");
+			}
+		});
+		button_2.setBounds(177, 298, 97, 23);
+		contentPane.add(button_2);
 	}
 }
