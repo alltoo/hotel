@@ -44,12 +44,12 @@ public class Hotel {
 	}
 	@Override
 	public String toString() {
-		//String save=name/t+number/t+level/t+quantity/n;
+
 		return "hotel [name="+ name + ", number=" + number + ", level=" + level + ", quantity=" + quantity + "]";
 	}
 	public String toSaveString() {
-		//String save=name/t+number/t+level/t+quantity/n;
-		return  name + "\t" + number + "\t" + level + "\t" + quantity + "\n";
+		
+		return  name + "\t" + number + "\t" + level + "\t" + quantity + "\r\n";
 	}
 
 }

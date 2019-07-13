@@ -20,8 +20,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JList;
 
 public class yf extends JFrame {
 
@@ -30,6 +32,7 @@ public class yf extends JFrame {
 	private JTextField number;
 	private JTextField quantity;
 	private JComboBox cblevel;
+	private JList list;
 	Hotel s;
 	String major;
 	/**
@@ -53,7 +56,7 @@ public class yf extends JFrame {
 	 */
 	public yf() throws FileNotFoundException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 740, 341);
+		setBounds(100, 100, 665, 496);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -76,17 +79,17 @@ public class yf extends JFrame {
 		contentPane.add(label_3);
 		
 		name = new JTextField();
-		name.setBounds(285, 47, 129, 23);
+		name.setBounds(113, 40, 129, 23);
 		contentPane.add(name);
 		name.setColumns(10);
 		
 		number = new JTextField();
-		number.setBounds(285, 117, 129, 21);
+		number.setBounds(113, 117, 129, 21);
 		contentPane.add(number);
 		number.setColumns(10);
 		
 		quantity = new JTextField();
-		quantity.setBounds(285, 253, 129, 23);
+		quantity.setBounds(113, 259, 129, 23);
 		contentPane.add(quantity);
 		quantity.setColumns(10);
 		
@@ -96,11 +99,11 @@ public class yf extends JFrame {
 				
 				String le= (String) cblevel.getSelectedItem();
 				s=new Hotel(name.getText(),number.getText(),le,quantity.getText());
-				String path="d:/é…’åº—æ–‡ä»¶å‚¨å­˜/hotel.txt";
-				//å®šä¹‰æ–‡ä»¶çš„å‚¨å­˜è·¯å¾„ï¼›
+				String path="d:/¾ÆµêÎÄ¼ş´¢´æ/hotel.txt";
+				//¶¨ÒåÎÄ¼şµÄ´¢´æÂ·¾¶£»
 				File f=new File(path);
 				Writer out =null;
-				//å†™æ–‡ä»¶ï¼›
+				//Ğ´ÎÄ¼ş£»
 				try {
 					out=new FileWriter(f,true);
 				} catch (IOException e) {
@@ -132,7 +135,7 @@ public class yf extends JFrame {
 
 			}
 		});
-		button_1.setBounds(317, 298, 97, 23);
+		button_1.setBounds(177, 344, 97, 23);
 		contentPane.add(button_1);
 		
 		 cblevel = new JComboBox();
@@ -140,8 +143,8 @@ public class yf extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		String path="d:/é…’åº—æ–‡ä»¶å‚¨å­˜/level.txt";
-		//è¯»æ–‡ä»¶ï¼›
+		String path="d:/¾ÆµêÎÄ¼ş´¢´æ/level.txt";
+		//¶ÁÎÄ¼ş£»
 		
 		try {
 			FileReader fr=new FileReader(path);
@@ -151,19 +154,19 @@ public class yf extends JFrame {
 				while((major=bf.readLine())!=null) {
 					cblevel.addItem(major);
 				}
-				//å¾ªç¯è¯»æ–‡ä»¶ï¼Œç›´åˆ°nullï¼›
+				//Ñ­»·¶ÁÎÄ¼ş£¬Ö±µ½null£»
 			bf.close();
 			fr.close();
-			//å…³é—­æ–‡ä»¶
+			//¹Ø±ÕÎÄ¼ş
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();//è§£å†³äº†æ–‡ä»¶æ‰¾ä¸åˆ°çš„å¼‚å¸¸ï¼›
+			e1.printStackTrace();//½â¾öÁËÎÄ¼şÕÒ²»µ½µÄÒì³££»
 		}
 		
 		/*comboBox.addItem("A");
 		comboBox.addItem("B");
 		comboBox.addItem("C");*/
-		cblevel.setBounds(285, 184, 129, 29);
+		cblevel.setBounds(113, 184, 129, 29);
 		contentPane.add(cblevel);
 		
 		JButton button_2 = new JButton("\u6E05\u7A7A");
@@ -177,5 +180,41 @@ public class yf extends JFrame {
 		});
 		button_2.setBounds(177, 298, 97, 23);
 		contentPane.add(button_2);
+		
+		JButton button_3 = new JButton("¶ÁÈ¡");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				System.out.println("456");
+		
+				String path="d:/¾ÆµêÎÄ¼ş´¢´æ/hotel.txt";
+				//¶ÁÎÄ¼ş£»
+				ArrayList<String> infors =new ArrayList<String>();
+				try {
+					FileReader fr=new FileReader(path);
+					BufferedReader bf=new BufferedReader(fr);
+					String show  ; 
+					
+					while((show=bf.readLine())!=null) {
+						infors.add(show);
+					
+					}
+					//Ñ­»·¶ÁÎÄ¼ş£¬Ö±µ½null£»
+					list.setListData(infors.toArray());
+					bf.close();
+					fr.close();
+					//¹Ø±ÕÎÄ¼ş
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();//½â¾öÁËÎÄ¼şÕÒ²»µ½µÄÒì³££»
+				}
+			}
+		});
+		button_3.setBounds(28, 344, 97, 23);
+		contentPane.add(button_3);
+		
+		list = new JList();
+		list.setBounds(363, 79, 241, 288);
+		contentPane.add(list);
 	}
 }
